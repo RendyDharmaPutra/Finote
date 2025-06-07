@@ -29,11 +29,15 @@ class BalanceController extends Controller
         // Menghitung total amount dari semua balance yang ada
         $totalAmount = $balances->sum('amount');
 
-        // Kirim data Balance, Total Amount, dan Jumlah Balance (count) ke Frontend
+        // Mengambil saldo tertinggi di antara semua saldo yang ada
+        $highestBalance = $balances->max('amount');
+
+        // Kirim data Balance, Total Amount, Jumlah Balance (count), dan Saldo Tertinggi ke Frontend
         return Inertia::render('balance/balances', [
             'balances' => $balances,  // Data Balance
             'totalAmount' => $totalAmount,  // Total Amount
             'balanceCount' => $balanceCount,  // Jumlah Balance
+            'highestBalance' => $highestBalance, // Saldo Tertinggi
         ]);
     }
 }
