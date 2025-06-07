@@ -9,28 +9,31 @@ use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-
-
+use App\Models\Balance;
 
 class BalanceController extends Controller
 {
     /**
-     * Menampilkan Halmaan Daftar Saldo
+     * Menampilkan Halaman Daftar Saldo
      */
     public function index(): Response {
-        //**
-        //  TODO :
-        //  Menangkap ID User yang login
+        // Menangkap ID User yang login
         $userId = Auth::id();
-        //  Mengambil data Balance berdasarkan ID User
-        //  Hitung Balance yang ada (count)
-        //  Totalkan semua properti amount dari Balance (count)
-        //  Kirim data Balance,Total Amount, dan Jumlah Balance (count) ke Frontend
-        //
-        //  */
 
+        // Mengambil data Balance berdasarkan ID User
+        $balances = Balance::where('user_id', $userId)->get(); // Ambil data balance milik user
 
+        // Menghitung jumlah saldo (count)
+        $balanceCount = $balances->count();
 
-         return Inertia::render('balance/balances');
+        // Menghitung total amount dari semua balance yang ada
+        $totalAmount = $balances->sum('amount');
+
+        // Kirim data Balance, Total Amount, dan Jumlah Balance (count) ke Frontend
+        return Inertia::render('balance/balances', [
+            'balances' => $balances,  // Data Balance
+            'totalAmount' => $totalAmount,  // Total Amount
+            'balanceCount' => $balanceCount,  // Jumlah Balance
+        ]);
     }
 }
