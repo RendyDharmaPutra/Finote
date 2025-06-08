@@ -40,4 +40,8 @@ class BalanceController extends Controller
             'highestBalance' => $highestBalance, // Saldo Tertinggi
         ]);
     }
+
+    public function store(Request $request) {
+        dd($request->all());
+    }
 }

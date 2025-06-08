@@ -25,7 +25,7 @@ const BalancesPage: React.FC<BalancesPageProps> = (props) => {
                 <ContentHeader title="Rangkuman Saldo" description="Kelola semua Saldo Keuangan Kamu" />
                 <BalanceInfoWrapper />
                 <BalanceWrapper setShowDialog={setShowAddDialog} />
-                <BalanceFormDialog open={showAddDialog} setOpen={setShowAddDialog} title="Tambah Saldo Baru" />
+                <BalanceFormDialog open={showAddDialog} setOpen={setShowAddDialog} title="Tambah Saldo Baru" action="balance.store" />
             </PageContent>
         </AppLayout>
     );
