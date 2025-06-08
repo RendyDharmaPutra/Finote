@@ -3,7 +3,15 @@ import { BalanceWrapper } from '@/components/balance/balance-wrapper';
 import AppLayout from '@/layouts/app-layout';
 import { ContentHeader } from '@/layouts/content-header';
 import { PageContent } from '@/layouts/page-content';
+import { BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Saldo',
+        href: '/balance',
+    },
+];
 
 type BalancesPageProps = {
     balances: Balance[];
@@ -14,7 +22,7 @@ type BalancesPageProps = {
 
 const BalancesPage: React.FC<BalancesPageProps> = (props) => {
     return (
-        <AppLayout>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Saldo" />
             <PageContent>
                 <ContentHeader title="Rangkuman Saldo" description="Kelola semua Saldo Keuangan Kamu" />
