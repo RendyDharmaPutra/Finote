@@ -1,6 +1,6 @@
 import { formatToIDR } from '@/lib/formatters';
 import { formatDistanceToNow } from 'date-fns';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
 
 type BalanceCardProps = {
     data: Balance;
