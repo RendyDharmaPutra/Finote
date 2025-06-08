@@ -10,7 +10,7 @@ type BalanceFormDialogProps = {
 export const BalanceFormDialog: React.FC<BalanceFormDialogProps> = (props) => {
     return (
         <FormDialogContainer title={props.title} open={props.open} setOpen={props.setOpen}>
-            <TextField label="Nama Saldo" name="name" index={1} placeholder="Tabungan" />
+            <TextField label="Nama Saldo" name="name" index={1} placeholder="Contoh: Tabungan" />
             <TextField label="Jumlah Awal" name="amount" index={2} type="number" step={1000} min={0} placeholder="0" />
         </FormDialogContainer>
     );
