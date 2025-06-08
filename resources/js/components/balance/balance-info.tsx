@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
 type BalanceInfoProps = {
     title: string;
-    value: number;
+    value: string | number;
     description: string;
 };
 
@@ -15,9 +15,7 @@ export const BalanceInfo = (props: BalanceInfoProps) => {
                 <TrendingUp className="text-muted-foreground h-4 w-4" />
             </CardHeader>
             <CardContent>
-                <div className="text-2xl font-bold">
-                    {props.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </div>
+                <div className="text-2xl font-bold">{props.value}</div>
                 <p className="text-muted-foreground text-xs">{props.description}</p>
             </CardContent>
         </Card>

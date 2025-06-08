@@ -13,7 +13,7 @@ export const BalanceWrapper: React.FC<BalanceWrapperProps> = (props) => {
 
             <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {props.balances.map((balance) => (
-                    <BalanceCard data={balance} />
+                    <BalanceCard key={balance.id} data={balance} />
                 ))}
             </section>
         </section>

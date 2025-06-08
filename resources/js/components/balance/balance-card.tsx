@@ -1,3 +1,4 @@
+import { formatToIDR } from '@/lib/formatters';
 import { formatDistanceToNow } from 'date-fns';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
@@ -7,7 +8,7 @@ type BalanceCardProps = {
 
 export const BalanceCard: React.FC<BalanceCardProps> = (props) => {
     return (
-        <Card key={props.data.id} className="cursor-pointer transition-shadow hover:shadow-lg">
+        <Card className="cursor-pointer transition-shadow hover:shadow-lg">
             <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                     <CardTitle className="text-lg">{props.data.name}</CardTitle>
@@ -17,9 +18,7 @@ export const BalanceCard: React.FC<BalanceCardProps> = (props) => {
                 <div className="space-y-3">
                     <div>
                         <p className="text-muted-foreground text-sm">Saldo saat ini</p>
-                        <p className="text-2xl font-bold">
-                            ${props.data.amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                        </p>
+                        <p className="text-2xl font-bold">{formatToIDR(props.data.amount)}</p>
                     </div>
 
                     <div className="flex items-center justify-between text-sm">
