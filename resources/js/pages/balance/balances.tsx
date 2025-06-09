@@ -15,7 +15,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const BalancesPage: React.FC<BalancesPageProps> = (props) => {
+const BalancesPage: React.FC = () => {
     const [showAddDialog, setShowAddDialog] = useState(false);
 
     return (

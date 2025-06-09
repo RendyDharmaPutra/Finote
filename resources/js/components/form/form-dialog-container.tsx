@@ -15,8 +15,8 @@ export type FormDialogContainerProps = {
 export const FormDialogContainer = (props: FormDialogContainerProps) => {
     return (
         <Dialog open={props.open} onOpenChange={props.setOpen}>
-            <DialogContent className="flex flex-col gap-6 sm:max-w-[425px]">
-                <form onSubmit={props.onSubmit}>
+            <DialogContent className="sm:max-w-[425px]">
+                <form onSubmit={props.onSubmit} className="flex flex-col gap-6">
                     <DialogHeader>
                         <DialogTitle>{props.title}</DialogTitle>
                         <DialogDescription>Masukkan semua informasi yang dibutuhkan di bawah</DialogDescription>

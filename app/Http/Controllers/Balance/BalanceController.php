@@ -13,6 +13,25 @@ use App\Models\Balance;
 
 class BalanceController extends Controller
 {
+    // ? Aturan Validasi -> supaya bisa digunakan kembali di banyak method
+     protected array $validationRules = [
+        'name' => ['required', 'string', 'min:3', 'max:100'],
+        'amount' => ['required', 'numeric', 'min:500'],
+    ];
+
+    // ? Pesan dari Validasi -> karena pesan default dari Laravel menggunakan bahasa Inggris
+    protected function validationMessages(): array {
+        return [
+            'name.required' => 'Nama saldo wajib diisi.',
+            'name.string' => 'Nama saldo harus berupa teks.',
+            'name.min' => 'Nama saldo minimal 3 karakter.',
+            'name.max' => 'Nama saldo tidak boleh lebih dari 100 karakter.',
+            'amount.required' => 'Jumlah saldo wajib diisi.',
+            'amount.numeric' => 'Jumlah saldo harus berupa angka.',
+            'amount.min' => 'Jumlah saldo minimal adalah 500.',
+        ];
+    }
+
     /**
      * Menampilkan Halaman Daftar Saldo
      */
@@ -42,6 +61,8 @@ class BalanceController extends Controller
     }
 
     public function store(Request $request) {
-        dd($request->all());
+        $validated = $request->validate($this->validationRules, $this->validationMessages());
+
+        dd($validated);
     }
 }

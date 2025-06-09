@@ -6,7 +6,7 @@ import { RouteName } from 'vendor/tightenco/ziggy/src/js';
 
 type BalanceForm = {
     name: string;
-    amount: string;
+    amount: string | number;
 };
 
 type BalanceFormDialogProps = {
@@ -24,6 +24,9 @@ export const BalanceFormDialog: React.FC<BalanceFormDialogProps> = (props) => {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+
+        setData('amount', Number(data.amount)); // Convert ke Number sebelum diproses di Backend
+
         post(route(props.action), {
             onSuccess: () => {
                 reset();
@@ -52,7 +55,7 @@ export const BalanceFormDialog: React.FC<BalanceFormDialogProps> = (props) => {
                     name="amount"
                     index={2}
                     type="number"
-                    step={1000}
+                    step={500}
                     min={0}
                     placeholder="0"
                     value={data.amount}
