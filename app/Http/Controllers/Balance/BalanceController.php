@@ -79,8 +79,6 @@ class BalanceController extends Controller
         // Validasi data input
         $validated = $request->validate($this->validationRules, $this->validationMessages());
 
-        // dd($validated);
-
         // Update data
         $balance = Balance::findOrFail($id);
         $balance->update($validated);
