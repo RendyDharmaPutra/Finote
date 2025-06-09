@@ -1,33 +1,45 @@
 import { FormDialogContainer } from '@/components/form/form-dialog-container';
 import { TextField } from '@/components/form/text-field';
 import { useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useEffect } from 'react';
 import { RouteName } from 'vendor/tightenco/ziggy/src/js';
-
-type BalanceForm = {
-    name: string;
-    amount: string | number;
-};
 
 type BalanceFormDialogProps = {
     title: string;
     action: RouteName;
+    method?: 'post' | 'put'; // default ke post
     open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpen: (value: boolean) => void;
+    initialValues?: BalanceForm;
 };
 
 export const BalanceFormDialog: React.FC<BalanceFormDialogProps> = (props) => {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<BalanceForm>>({
+    const { data, setData, post, put, processing, errors, reset } = useForm<Required<BalanceForm>>({
+        id: 0,
         name: '',
         amount: '',
     });
 
+    // Set Initial Values jika ada dari Props
+    useEffect(() => {
+        if (props.initialValues) {
+            setData({
+                id: props.initialValues.id ?? 0,
+                name: props.initialValues.name,
+                amount: props.initialValues.amount,
+            });
+        }
+    }, [props.initialValues]);
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
+        const submitFn = props.method === 'put' ? put : post;
+        const routeParams = props.method === 'put' ? { balance: props.initialValues?.id } : undefined;
+
         setData('amount', Number(data.amount)); // Convert ke Number sebelum diproses di Backend
 
-        post(route(props.action), {
+        submitFn(route(props.action, routeParams), {
             onSuccess: () => {
                 reset();
                 props.setOpen(false);

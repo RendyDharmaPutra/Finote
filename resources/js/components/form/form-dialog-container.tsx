@@ -6,7 +6,7 @@ import { FormEventHandler } from 'react';
 export type FormDialogContainerProps = {
     title: string;
     open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpen: (value: boolean) => void;
     processing: boolean;
     onSubmit: FormEventHandler;
     children: React.ReactNode;

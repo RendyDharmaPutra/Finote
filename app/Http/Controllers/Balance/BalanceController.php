@@ -61,6 +61,14 @@ class BalanceController extends Controller
     }
 
     public function store(Request $request) {
+        // Validasi data input
+        $validated = $request->validate($this->validationRules, $this->validationMessages());
+
+        dd($validated);
+    }
+
+    public function update(Request $request) {
+        // Validasi data input
         $validated = $request->validate($this->validationRules, $this->validationMessages());
 
         dd($validated);

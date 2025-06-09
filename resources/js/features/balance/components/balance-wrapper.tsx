@@ -1,25 +1,24 @@
 import { AddBtn } from '@/components/common/add-btn';
 import { usePage } from '@inertiajs/react';
+import { useBalanceDialog } from '../context/balance-dialog-context';
 import { BalanceCard } from './balance-card';
 
-type BalanceWrapperProps = {
-    setShowDialog: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-export const BalanceWrapper: React.FC<BalanceWrapperProps> = (props) => {
+export const BalanceWrapper = () => {
     return (
         <section className="flex flex-col gap-4">
-            <BalanceWrapperHeader setShowDialog={props.setShowDialog} />
+            <BalanceWrapperHeader />
             <BalanceWrapperContent />
         </section>
     );
 };
 
-const BalanceWrapperHeader: React.FC<BalanceWrapperProps> = (props) => {
+const BalanceWrapperHeader = () => {
+    const { setShowAddDialog } = useBalanceDialog();
+
     return (
         <div className="flex w-full flex-row justify-between">
             <h6 className="text-lg font-semibold md:text-xl">Daftar Saldo</h6>
-            <AddBtn title="Saldo" onClick={() => props.setShowDialog(true)} />
+            <AddBtn title="Saldo" onClick={() => setShowAddDialog(true)} />
         </div>
     );
 };
