@@ -5,6 +5,8 @@ type BalanceDialogContextType = {
     setShowAddDialog: (value: boolean) => void;
     showEditDialog: boolean;
     setShowEditDialog: (value: boolean) => void;
+    showDeleteDialog: boolean;
+    setShowDeleteDialog: (value: boolean) => void;
     selectedBalance?: BalanceForm;
     setSelectedBalance: (balance?: BalanceForm) => void;
 };
@@ -14,6 +16,7 @@ const BalanceDialogContext = createContext<BalanceDialogContextType | undefined>
 export const BalanceDialogProvider = ({ children }: { children: ReactNode }) => {
     const [showAddDialog, setShowAddDialog] = useState(false);
     const [showEditDialog, setShowEditDialog] = useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [selectedBalance, setSelectedBalance] = useState<BalanceForm>();
 
     return (
@@ -23,6 +26,8 @@ export const BalanceDialogProvider = ({ children }: { children: ReactNode }) => 
                 setShowAddDialog,
                 showEditDialog,
                 setShowEditDialog,
+                showDeleteDialog,
+                setShowDeleteDialog,
                 selectedBalance,
                 setSelectedBalance,
             }}

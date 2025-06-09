@@ -4,6 +4,7 @@ import { BalanceWrapper } from '@/features/balance/components/balance-wrapper';
 import { useBalanceDialog } from '@/features/balance/context/balance-dialog-context';
 import { ContentHeader } from '@/layouts/content-header';
 import { PageContent } from '@/layouts/page-content';
+import { DeleteBalanceDialog } from './delete-balance-dialog';
 
 export const BalancesPageContent = () => {
     const { showAddDialog, setShowAddDialog, showEditDialog, setShowEditDialog, selectedBalance } = useBalanceDialog();
@@ -22,6 +23,7 @@ export const BalancesPageContent = () => {
                 method="put"
                 initialValues={selectedBalance}
             />
+            <DeleteBalanceDialog />
         </PageContent>
     );
 };

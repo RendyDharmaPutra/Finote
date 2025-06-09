@@ -73,4 +73,10 @@ class BalanceController extends Controller
 
         dd($validated);
     }
+
+    public function destroy(Balance $balance) {
+         $balance->delete();
+
+        return redirect()->back()->with('success', 'Saldo berhasil dihapus.');
+    }
 }
