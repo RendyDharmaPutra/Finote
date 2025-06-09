@@ -64,14 +64,26 @@ class BalanceController extends Controller
         // Validasi data input
         $validated = $request->validate($this->validationRules, $this->validationMessages());
 
-        dd($validated);
+        // Tambahkan user_id ke data validasi
+        $validated['user_id'] = Auth::id();
+
+        // Simpan data ke database
+        Balance::create($validated);
+
+        // Redirect atau respon lainnya
+        return redirect()->route('balance.index')->with('success', 'Saldo berhasil ditambahkan.');
+
     }
 
-    public function update(Request $request) {
+    public function update(Request $request, $id) {
         // Validasi data input
         $validated = $request->validate($this->validationRules, $this->validationMessages());
 
-        dd($validated);
+        // dd($validated);
+
+        // Update data
+        $balance = Balance::findOrFail($id);
+        $balance->update($validated);
     }
 
     public function destroy(Balance $balance) {
