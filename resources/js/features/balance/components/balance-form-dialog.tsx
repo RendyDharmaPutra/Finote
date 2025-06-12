@@ -56,7 +56,7 @@ export const BalanceFormDialog: React.FC<BalanceFormDialogProps> = (props) => {
                 <TextField
                     label="Nama Saldo"
                     name="name"
-                    index={1}
+                    tabIndex={1}
                     placeholder="Contoh: Tabungan"
                     value={data.name}
                     onChange={(e) => setData('name', e.target.value)}
@@ -65,7 +65,7 @@ export const BalanceFormDialog: React.FC<BalanceFormDialogProps> = (props) => {
                 <TextField
                     label="Jumlah Awal"
                     name="amount"
-                    index={2}
+                    tabIndex={2}
                     type="number"
                     step={500}
                     min={0}

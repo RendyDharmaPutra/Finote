@@ -1,12 +1,9 @@
 import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
-import InputError from '@/components/input-error';
+import { SubmitBtn } from '@/components/form/submit-btn';
+import { TextField } from '@/components/form/text-field';
 import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 
 type RegisterForm = {
@@ -32,85 +29,70 @@ export default function Register() {
     };
 
     return (
-        <AuthLayout title="Create an account" description="Enter your details below to create your account">
-            <Head title="Register" />
+        <AuthLayout title="Buat akun" description="Masukkan rincian di bawah untuk membuat akun anda">
+            <Head title="Daftar" />
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="name">Name</Label>
-                        <Input
-                            id="name"
-                            type="text"
-                            required
-                            autoFocus
-                            tabIndex={1}
-                            autoComplete="name"
-                            value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
-                            disabled={processing}
-                            placeholder="Full name"
-                        />
-                        <InputError message={errors.name} className="mt-2" />
-                    </div>
+                    <TextField
+                        label="Nama"
+                        name="name"
+                        type="text"
+                        autoFocus
+                        tabIndex={1}
+                        autoComplete="name"
+                        value={data.name}
+                        onChange={(e) => setData('name', e.target.value)}
+                        disabled={processing}
+                        placeholder="Nama Lengkap"
+                        message={errors.name}
+                    />
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            required
-                            tabIndex={2}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            disabled={processing}
-                            placeholder="email@example.com"
-                        />
-                        <InputError message={errors.email} />
-                    </div>
+                    <TextField
+                        label="Alamat Email"
+                        name="email"
+                        type="email"
+                        tabIndex={2}
+                        autoComplete="email"
+                        value={data.email}
+                        onChange={(e) => setData('email', e.target.value)}
+                        disabled={processing}
+                        placeholder="email@example.com"
+                        message={errors.email}
+                    />
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                            id="password"
-                            type="password"
-                            required
-                            tabIndex={3}
-                            autoComplete="new-password"
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            disabled={processing}
-                            placeholder="Password"
-                        />
-                        <InputError message={errors.password} />
-                    </div>
+                    <TextField
+                        label="Password"
+                        name="password"
+                        type="password"
+                        tabIndex={3}
+                        autoComplete="new-password"
+                        value={data.password}
+                        onChange={(e) => setData('password', e.target.value)}
+                        disabled={processing}
+                        placeholder="Password"
+                        message={errors.password}
+                    />
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="password_confirmation">Confirm password</Label>
-                        <Input
-                            id="password_confirmation"
-                            type="password"
-                            required
-                            tabIndex={4}
-                            autoComplete="new-password"
-                            value={data.password_confirmation}
-                            onChange={(e) => setData('password_confirmation', e.target.value)}
-                            disabled={processing}
-                            placeholder="Confirm password"
-                        />
-                        <InputError message={errors.password_confirmation} />
-                    </div>
+                    <TextField
+                        label="Konfirmasi Password"
+                        name="password_confirmation"
+                        type="password"
+                        tabIndex={4}
+                        autoComplete="new-password"
+                        value={data.password_confirmation}
+                        onChange={(e) => setData('password_confirmation', e.target.value)}
+                        disabled={processing}
+                        placeholder="Konfirmasi password"
+                        message={errors.password_confirmation}
+                    />
 
-                    <Button type="submit" className="mt-2 w-full" tabIndex={5} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Create account
-                    </Button>
+                    <SubmitBtn label="Buat Akun" type="submit" tabIndex={5} processing={processing} className="mt-2 w-full" />
                 </div>
 
                 <div className="text-muted-foreground text-center text-sm">
-                    Already have an account?{' '}
+                    Sudah punya akun?{' '}
                     <TextLink href={route('login')} tabIndex={6}>
-                        Log in
+                        Masuk disini
                     </TextLink>
                 </div>
             </form>
