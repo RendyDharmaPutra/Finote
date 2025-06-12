@@ -75,7 +75,7 @@ const BalanceCardAction = ({ label, ...props }: React.ComponentProps<'button'> &
             : 'text-red-500 opacity-0 duration-250 group-hover:opacity-100 hover:text-red-600';
 
     return (
-        <Button {...props} size="sm" variant="outline" className={`opacity-0 duration-250 group-hover:opacity-100 ${textColor}`}>
+        <Button {...props} size="sm" variant="outline" className={`opacity-0 transition-all duration-250 group-hover:opacity-100 ${textColor}`}>
             {props.children}
             <span className="sr-only">{label}</span>
         </Button>
