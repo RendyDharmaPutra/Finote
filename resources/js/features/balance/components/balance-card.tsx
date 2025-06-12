@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { formatToIDR } from '@/lib/formatters';
 import { formatDistanceToNow } from 'date-fns';
+import { id } from 'date-fns/locale';
 import { Pencil, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { useBalanceDialog } from '../context/balance-dialog-context';
@@ -61,7 +62,7 @@ const BalanceCardContent: React.FC<BalanceCardProps> = (props) => {
 
                 <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Terakhir diperbarui</span>
-                    <span className="font-medium">{formatDistanceToNow(props.data.updated_at, { addSuffix: true })}</span>
+                    <span className="font-medium">{formatDistanceToNow(props.data.updated_at, { addSuffix: true, locale: id })}</span>
                 </div>
             </div>
         </CardContent>
@@ -72,10 +73,10 @@ const BalanceCardAction = ({ label, ...props }: React.ComponentProps<'button'> &
     const textColor =
         label === 'Ubah'
             ? 'text-gray-700 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-400'
-            : 'text-red-500 opacity-0 duration-250 group-hover:opacity-100 hover:text-red-600';
+            : 'text-red-500 duration-250 group-hover:opacity-100 hover:text-red-600';
 
     return (
-        <Button {...props} size="sm" variant="outline" className={`opacity-0 transition-all duration-250 group-hover:opacity-100 ${textColor}`}>
+        <Button {...props} size="sm" variant="outline" className={`transition-all duration-250 md:opacity-0 md:group-hover:opacity-100 ${textColor}`}>
             {props.children}
             <span className="sr-only">{label}</span>
         </Button>
