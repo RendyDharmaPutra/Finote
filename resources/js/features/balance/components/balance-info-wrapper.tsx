@@ -9,8 +9,8 @@ export const BalanceInfoWrapper: React.FC<BalanceInfoWrapperProps> = (props) => 
 
     return (
         <section className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <BalanceInfo title="Total Saldo" value={formatToIDR(data.totalAmount)} description="dari 5 Saldo" />
-            <BalanceInfo title="Saldo tertinggi" value={formatToIDR(data.highestBalance)} description="di antara 5 saldo" />
+            <BalanceInfo title="Total Saldo" value={formatToIDR(data.totalAmount)} description={`dari ${data.balanceCount} Saldo`} />
+            <BalanceInfo title="Saldo tertinggi" value={formatToIDR(data.highestBalance)} description={`di antara ${data.balanceCount} saldo`} />
             <BalanceInfo title="Saldo dimiliki" value={data.balanceCount} description="saldo yang dimiliki" />
         </section>
     );
