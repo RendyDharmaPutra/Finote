@@ -19,21 +19,24 @@ class IncomeSeeder extends Seeder
                 'amount' => 5000000,
                 'user_id' => '1',
                 'balance_id' => '1',
-                'category_id' => '1'
+                'category_id' => '1',
+                'time' => now()
             ],
             [
                 'name' => 'Hasil Investasi',
                 'amount' => 1000000,
                 'user_id' => '1',
                 'balance_id' => '1',
-                'category_id' => '1'
+                'category_id' => '1',
+                'time' => now()
             ],
             [
                 'name' => 'Freelance Desain',
                 'amount' => 1500000,
                 'user_id' => '1',
                 'balance_id' => '1',
-                'category_id' => '1'
+                'category_id' => '1',
+                'time' => now()
             ],
         ];
 

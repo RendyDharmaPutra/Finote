@@ -9,7 +9,9 @@ class Income extends Model
 {
     use HasFactory;
 
-    protected $table = 'income';
+     protected $with = ['balances', 'income_categories'];
+
+    protected $table = 'incomes';
     protected $fillable = [
         'name',
         'time',

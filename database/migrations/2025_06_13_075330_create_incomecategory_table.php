@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('income_category', function (Blueprint $table) {
-            $table->bigIncrements('category_id');
+        Schema::create('income_categories', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('name');
             $table->timestamps();
         });
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('income_category');
+        Schema::dropIfExists('income_categories');
     }
 };

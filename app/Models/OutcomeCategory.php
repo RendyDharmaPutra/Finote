@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OutcomeCategory extends Model
 {
     use HasFactory;
-    protected $table = 'outcome_category';
-    protected $primaryKey = 'category_id';
+    protected $table = 'outcome_categories';
     protected $fillable = [
         'name'
     ];
