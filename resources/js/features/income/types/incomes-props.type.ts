@@ -1,0 +1,3 @@
+type IncomePageProps = {
+    incomes: Income[];
+};

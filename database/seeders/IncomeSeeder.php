@@ -17,7 +17,7 @@ class IncomeSeeder extends Seeder
             [
                 'name' => 'Gaji Bulanan',
                 'amount' => 5000000,
-                'user_id' => '1',
+                'user_id' => '11',
                 'balance_id' => '1',
                 'category_id' => '1',
                 'time' => now()
@@ -25,7 +25,7 @@ class IncomeSeeder extends Seeder
             [
                 'name' => 'Hasil Investasi',
                 'amount' => 1000000,
-                'user_id' => '1',
+                'user_id' => '11',
                 'balance_id' => '1',
                 'category_id' => '1',
                 'time' => now()
@@ -33,7 +33,7 @@ class IncomeSeeder extends Seeder
             [
                 'name' => 'Freelance Desain',
                 'amount' => 1500000,
-                'user_id' => '1',
+                'user_id' => '11',
                 'balance_id' => '1',
                 'category_id' => '1',
                 'time' => now()
