@@ -3,6 +3,6 @@ type IncomeForm = {
     name: string;
     amount: string | number;
     time: Date;
-    balance_id: number;
-    category_id: number;
+    balance_id: string | number;
+    category_id: string | number;
 };
