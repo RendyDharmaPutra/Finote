@@ -67,8 +67,8 @@ const IncomeCardContent: React.FC<IncomeCardProps> = ({ data }) => {
                 </div>
 
                 <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Waktu Transaksi</span>
-                    <span className="font-medium">{format(data.time, 'dd MMMM, yyyy HH:mm', { locale: id })}</span>
+                    <span className="text-muted-foreground">Tanggal Transaksi</span>
+                    <span className="font-medium">{format(data.time, 'dd MMMM, yyyy', { locale: id })}</span>
                 </div>
             </div>
         </CardContent>

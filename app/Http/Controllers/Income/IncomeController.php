@@ -87,7 +87,7 @@ class IncomeController extends Controller
         $validated['user_id'] = Auth::id();
 
         // Konversi time format
-        $validated['time'] = Carbon::parse($validated['time']);
+        $validated['time'] = Carbon::parse($validated['time'])->setTimeZone('Asia/Jakarta');
 
         // Simpan data ke database
         Income::create($validated);

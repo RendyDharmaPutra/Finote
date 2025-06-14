@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');  // nama saldo
             $table->bigInteger('amount');  // jumlah saldo
-            $table->timestamp('time');
+            $table->date('time');
             $table->string('user_id');
             $table->string('balance_id');
             $table->string('category_id');
