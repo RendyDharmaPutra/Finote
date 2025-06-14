@@ -7,7 +7,7 @@ import { PageContent } from '@/layouts/page-content';
 import { DeleteBalanceDialog } from './delete-balance-dialog';
 
 export const BalancesPageContent = () => {
-    const { showAddDialog, setShowAddDialog, showEditDialog, setShowEditDialog, selectedBalance } = useBalanceDialog();
+    const { showAddDialog, setShowAddDialog, showEditDialog, setShowEditDialog, selectedData } = useBalanceDialog();
 
     return (
         <PageContent>
@@ -21,7 +21,7 @@ export const BalancesPageContent = () => {
                 title="Ubah Saldo"
                 action="balance.update"
                 method="put"
-                initialValues={selectedBalance}
+                initialValues={selectedData}
             />
             <DeleteBalanceDialog />
         </PageContent>

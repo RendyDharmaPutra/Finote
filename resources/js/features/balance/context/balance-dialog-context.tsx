@@ -1,44 +1,5 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createDialogContext } from '@/context/dialog-context-factory';
 
-type BalanceDialogContextType = {
-    showAddDialog: boolean;
-    setShowAddDialog: (value: boolean) => void;
-    showEditDialog: boolean;
-    setShowEditDialog: (value: boolean) => void;
-    showDeleteDialog: boolean;
-    setShowDeleteDialog: (value: boolean) => void;
-    selectedBalance?: BalanceForm;
-    setSelectedBalance: (balance?: BalanceForm) => void;
-};
+const { Provider: BalanceDialogProvider, useDialog: useBalanceDialog } = createDialogContext<BalanceForm>();
 
-const BalanceDialogContext = createContext<BalanceDialogContextType | undefined>(undefined);
-
-export const BalanceDialogProvider = ({ children }: { children: ReactNode }) => {
-    const [showAddDialog, setShowAddDialog] = useState(false);
-    const [showEditDialog, setShowEditDialog] = useState(false);
-    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-    const [selectedBalance, setSelectedBalance] = useState<BalanceForm>();
-
-    return (
-        <BalanceDialogContext.Provider
-            value={{
-                showAddDialog,
-                setShowAddDialog,
-                showEditDialog,
-                setShowEditDialog,
-                showDeleteDialog,
-                setShowDeleteDialog,
-                selectedBalance,
-                setSelectedBalance,
-            }}
-        >
-            {children}
-        </BalanceDialogContext.Provider>
-    );
-};
-
-export const useBalanceDialog = () => {
-    const context = useContext(BalanceDialogContext);
-    if (!context) throw new Error('useBalanceDialog must be used within a BalanceDialogProvider');
-    return context;
-};
+export { BalanceDialogProvider, useBalanceDialog };

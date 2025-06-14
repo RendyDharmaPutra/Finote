@@ -2,14 +2,17 @@ import { EmptyBoundary } from '@/components/common/boundary/empty-boundary';
 import { WrapperHeader } from '@/components/container/wrapper-header';
 import { usePage } from '@inertiajs/react';
 import { Coins } from 'lucide-react';
+import { useIncomeDialog } from '../context/income-dialog-context';
 import { IncomeCard } from './income-card';
 
 type IncomeWrapperProps = {};
 
 export const IncomeWrapper: React.FC<IncomeWrapperProps> = (props) => {
+    const { setShowAddDialog } = useIncomeDialog();
+
     return (
         <section className="flex flex-col gap-4">
-            <WrapperHeader title="Daftar Pemasukan" setShowAddDialog={() => {}} />
+            <WrapperHeader title="Daftar Pemasukan" setShowAddDialog={setShowAddDialog} />
             <IncomeWrapperContent />
         </section>
     );

@@ -20,7 +20,7 @@ export const BalanceCard: React.FC<BalanceCardProps> = (props) => {
 };
 
 const BalanceCardHeader: React.FC<BalanceCardProps> = (props) => {
-    const { setShowDeleteDialog, setShowEditDialog, setSelectedBalance } = useBalanceDialog();
+    const { setShowDeleteDialog, setShowEditDialog, setSelectedData } = useBalanceDialog();
 
     return (
         <CardHeader className="pb-3">
@@ -31,7 +31,7 @@ const BalanceCardHeader: React.FC<BalanceCardProps> = (props) => {
                         label="Ubah"
                         onClick={() => {
                             setShowEditDialog(true);
-                            setSelectedBalance(props.data);
+                            setSelectedData(props.data);
                         }}
                     >
                         <Pencil className="h-4 w-4" />
@@ -40,7 +40,7 @@ const BalanceCardHeader: React.FC<BalanceCardProps> = (props) => {
                         label="Hapus"
                         onClick={() => {
                             setShowDeleteDialog(true);
-                            setSelectedBalance(props.data);
+                            setSelectedData(props.data);
                         }}
                     >
                         <Trash2 className="h-4 w-4" />

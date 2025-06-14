@@ -5,14 +5,13 @@ import { formatToIDR } from '@/lib/formatters';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { Pencil, Trash2 } from 'lucide-react';
+import { useIncomeDialog } from '../context/income-dialog-context';
 
 type IncomeCardProps = {
     data: Income;
 };
 
 export const IncomeCard: React.FC<IncomeCardProps> = ({ data }) => {
-    console.log(data);
-
     return (
         <Card className="group dayta-card">
             <IncomeCardHeader data={data} />
@@ -22,6 +21,8 @@ export const IncomeCard: React.FC<IncomeCardProps> = ({ data }) => {
 };
 
 const IncomeCardHeader: React.FC<IncomeCardProps> = ({ data }) => {
+    const { setShowEditDialog, setShowDeleteDialog, setSelectedData } = useIncomeDialog();
+
     return (
         <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -30,8 +31,8 @@ const IncomeCardHeader: React.FC<IncomeCardProps> = ({ data }) => {
                     <CardAction
                         label="Ubah"
                         onClick={() => {
-                            // setShowEditDialog(true);
-                            // setSelectedBalance(props.data);
+                            setShowEditDialog(true);
+                            setSelectedData(data);
                         }}
                     >
                         <Pencil className="h-4 w-4" />
@@ -39,8 +40,8 @@ const IncomeCardHeader: React.FC<IncomeCardProps> = ({ data }) => {
                     <CardAction
                         label="Hapus"
                         onClick={() => {
-                            // setShowDeleteDialog(true);
-                            // setSelectedBalance(props.data);
+                            setShowDeleteDialog(true);
+                            setSelectedData(data);
                         }}
                     >
                         <Trash2 className="h-4 w-4" />
