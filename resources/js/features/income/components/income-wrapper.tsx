@@ -1,38 +1,37 @@
 import { EmptyBoundary } from '@/components/common/boundary/empty-boundary';
 import { WrapperHeader } from '@/components/container/wrapper-header';
 import { usePage } from '@inertiajs/react';
-import { Wallet } from 'lucide-react';
-import { useBalanceDialog } from '../context/balance-dialog-context';
-import { BalanceCard } from './balance-card';
+import { Coins } from 'lucide-react';
+import { IncomeCard } from './income-card';
 
-export const BalanceWrapper = () => {
-    const { setShowAddDialog } = useBalanceDialog();
+type IncomeWrapperProps = {};
 
+export const IncomeWrapper: React.FC<IncomeWrapperProps> = (props) => {
     return (
         <section className="flex flex-col gap-4">
-            <WrapperHeader title="Daftar Saldo" setShowAddDialog={setShowAddDialog} />
-            <BalanceWrapperContent />
+            <WrapperHeader title="Daftar Pemasukan" setShowAddDialog={() => {}} />
+            <IncomeWrapperContent />
         </section>
     );
 };
 
-const BalanceWrapperContent = () => {
-    const { props: data } = usePage<BalancesPageProps>();
+const IncomeWrapperContent = () => {
+    const { props: data } = usePage<IncomePageProps>();
 
-    if (data.balanceCount < 1) {
+    if (data.incomes.length < 1) {
         return (
             <EmptyBoundary
                 title="Belum ada Saldo yang dimiliki"
                 description="Belum ada saldo yang kamu miliki. Tambahkan Saldo terlebih dahulu untuk kelola keuangan kamu."
-                icon={Wallet}
+                icon={Coins}
             />
         );
     }
 
     return (
         <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {data.balances.map((balance) => (
-                <BalanceCard key={balance.id} data={balance} />
+            {data.incomes.map((income) => (
+                <IncomeCard key={income.id} data={income} />
             ))}
         </section>
     );

@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { CardAction } from '@/components/card/card-action';
 import { formatToIDR } from '@/lib/formatters';
 import { formatDistanceToNow } from 'date-fns';
 import { id } from 'date-fns/locale';
@@ -12,7 +12,7 @@ type BalanceCardProps = {
 
 export const BalanceCard: React.FC<BalanceCardProps> = (props) => {
     return (
-        <Card className="group transition-shadow hover:shadow-lg">
+        <Card className="group data-card">
             <BalanceCardHeader data={props.data} />
             <BalanceCardContent data={props.data} />
         </Card>
@@ -27,7 +27,7 @@ const BalanceCardHeader: React.FC<BalanceCardProps> = (props) => {
             <div className="flex items-center justify-between">
                 <CardTitle className="text-lg">{props.data.name}</CardTitle>
                 <div className="flex flex-row gap-2.5">
-                    <BalanceCardAction
+                    <CardAction
                         label="Ubah"
                         onClick={() => {
                             setShowEditDialog(true);
@@ -35,8 +35,8 @@ const BalanceCardHeader: React.FC<BalanceCardProps> = (props) => {
                         }}
                     >
                         <Pencil className="h-4 w-4" />
-                    </BalanceCardAction>
-                    <BalanceCardAction
+                    </CardAction>
+                    <CardAction
                         label="Hapus"
                         onClick={() => {
                             setShowDeleteDialog(true);
@@ -44,7 +44,7 @@ const BalanceCardHeader: React.FC<BalanceCardProps> = (props) => {
                         }}
                     >
                         <Trash2 className="h-4 w-4" />
-                    </BalanceCardAction>
+                    </CardAction>
                 </div>
             </div>
         </CardHeader>
@@ -66,19 +66,5 @@ const BalanceCardContent: React.FC<BalanceCardProps> = (props) => {
                 </div>
             </div>
         </CardContent>
-    );
-};
-
-const BalanceCardAction = ({ label, ...props }: React.ComponentProps<'button'> & { label: 'Ubah' | 'Hapus' }) => {
-    const textColor =
-        label === 'Ubah'
-            ? 'text-gray-700 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-400'
-            : 'text-red-500 duration-250 group-hover:opacity-100 hover:text-red-600';
-
-    return (
-        <Button {...props} size="sm" variant="outline" className={`transition-all duration-250 md:opacity-0 md:group-hover:opacity-100 ${textColor}`}>
-            {props.children}
-            <span className="sr-only">{label}</span>
-        </Button>
     );
 };
