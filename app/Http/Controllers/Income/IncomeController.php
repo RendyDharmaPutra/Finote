@@ -55,31 +55,18 @@ class IncomeController extends Controller
     /**
      * Menampilkan Halaman Daftar Saldo
      */
-    public function index(): Response {
-        // Menangkap ID User yang login
-        $userId = Auth::id();
+    public function index() {
+        $incomes = Income::where('user_id', Auth::id())->latest()->get();
 
-        // Mengambil data Pemasukan berdasarkan ID Pengguna
-        $incomes = Income::where('user_id', $userId)->get();
-
-        // Mengambil data Saldo
-        $balances = Balance::all();
-
-        // Mengambil data Kategori Pemasukan
-        $categories = IncomeCategory::all();
-
-
-        // Tampilkan Halaman
         return Inertia::render('income/incomes', [
             'incomes' => $incomes,
-            'balances' => $balances,
-            'categories' => $categories,
+            'balances' => Balance::where('user_id', Auth::id())->get(),
+            'categories' => IncomeCategory::all(),
         ]);
     }
 
-    public function store(Request $request) {
-        // dd($request);
 
+    public function store(Request $request) {
         // Validasi data input
         $validated = $request->validate($this->validationRules, $this->validationMessages());
 
@@ -89,30 +76,69 @@ class IncomeController extends Controller
         // Konversi time format
         $validated['time'] = Carbon::parse($validated['time'])->setTimeZone('Asia/Jakarta');
 
-        // Simpan data ke database
-        Income::create($validated);
+        // Simpan income baru
+        $income = Income::create($validated);
 
-        // Redirect atau respon lainnya
+        // Tambahkan jumlah income ke balance terkait
+        $balance = Balance::findOrFail($validated['balance_id']);
+        $balance->amount += $validated['amount'];
+        $balance->save();
+
         return redirect()->route('income.index')->with('success', 'Pemasukan berhasil ditambahkan.');
-
     }
+
 
     public function update(Request $request, $id) {
         // Validasi data input
         $validated = $request->validate($this->validationRules, $this->validationMessages());
 
-        // Konversi time format
+        // Konversi waktu
         $validated['time'] = Carbon::parse($validated['time'])->setTimeZone('Asia/Jakarta');
 
-        // Update data
         $income = Income::findOrFail($id);
+
+        $oldAmount = $income->amount;
+        $oldBalanceId = $income->balance_id;
+
+        $newAmount = $validated['amount'];
+        $newBalanceId = $validated['balance_id'];
+
+        // 🔁 Update balance sesuai kondisi
+        if ($oldBalanceId != $newBalanceId) {
+            // Kurangi dari balance lama
+            $oldBalance = Balance::findOrFail($oldBalanceId);
+            $oldBalance->amount -= $oldAmount;
+            $oldBalance->save();
+
+            // Tambahkan ke balance baru
+            $newBalance = Balance::findOrFail($newBalanceId);
+            $newBalance->amount += $newAmount;
+            $newBalance->save();
+        } else {
+            // Balance sama, update dengan selisih
+            $balance = Balance::findOrFail($oldBalanceId);
+            $difference = $newAmount - $oldAmount;
+            $balance->amount += $difference;
+            $balance->save();
+        }
+
+        // Update income
         $income->update($validated);
+
+        return redirect()->route('income.index')->with('success', 'Pemasukan berhasil diperbarui.');
     }
 
+
+
     public function destroy(Income $income) {
-        // Hapus data
+        // Kurangi amount dari balance terkait
+        $balance = Balance::findOrFail($income->balance_id);
+        $balance->amount -= $income->amount;
+        $balance->save();
+
         $income->delete();
 
         return redirect()->back()->with('success', 'Pemasukan berhasil dihapus.');
     }
+
 }
