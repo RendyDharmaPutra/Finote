@@ -85,7 +85,7 @@ class BalanceController extends Controller
     }
 
     public function destroy(Balance $balance) {
-         $balance->delete();
+        $balance->delete();
 
         return redirect()->back()->with('success', 'Saldo berhasil dihapus.');
     }

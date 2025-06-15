@@ -109,8 +109,9 @@ class IncomeController extends Controller
         $income->update($validated);
     }
 
-    public function destroy(Balance $balance) {
+    public function destroy(Income $income) {
         // Hapus data
+        $income->delete();
 
         return redirect()->back()->with('success', 'Pemasukan berhasil dihapus.');
     }

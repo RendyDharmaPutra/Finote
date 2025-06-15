@@ -1,6 +1,7 @@
 import { ContentHeader } from '@/layouts/content-header';
 import { PageContent } from '@/layouts/page-content';
 import { useIncomeDialog } from '../context/income-dialog-context';
+import { DeleteIncomeDialog } from './delete-income-dialog';
 import { IncomeFormDialog } from './income-form-dialog';
 import { IncomeWrapper } from './income-wrapper';
 
@@ -22,6 +23,7 @@ export const IncomePageContent: React.FC<IncomePageContentProps> = (props) => {
                 initialValues={selectedData}
                 method="put"
             />
+            <DeleteIncomeDialog />
         </PageContent>
     );
 };
