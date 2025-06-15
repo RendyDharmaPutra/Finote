@@ -11,7 +11,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const BalancesPage: React.FC = () => {
+const IncomesPage: React.FC = () => {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Pemasukan" />
@@ -22,4 +22,4 @@ const BalancesPage: React.FC = () => {
     );
 };
 
-export default BalancesPage;
+export default IncomesPage;
