@@ -34,7 +34,7 @@ export const IncomeFormDialog: React.FC<IncomeFormDialogProps> = (props) => {
                 id: props.initialValues.id ?? 0,
                 name: props.initialValues.name,
                 amount: props.initialValues.amount,
-                time: props.initialValues.time,
+                time: new Date(props.initialValues.time),
                 balance_id: props.initialValues.balance_id,
                 category_id: props.initialValues.category_id,
             });
@@ -45,7 +45,9 @@ export const IncomeFormDialog: React.FC<IncomeFormDialogProps> = (props) => {
         e.preventDefault();
 
         const submitFn = props.method === 'put' ? put : post;
-        const routeParams = props.method === 'put' ? { Income: props.initialValues?.id } : undefined;
+        const routeParams = props.method === 'put' ? { income: props.initialValues?.id } : undefined;
+
+        console.log(routeParams);
 
         setData('amount', Number(data.amount)); // Convert ke Number sebelum diproses di Backend
         setData('balance_id', Number(data.balance_id)); // Convert ke Number sebelum diproses di Backend
@@ -65,7 +67,6 @@ export const IncomeFormDialog: React.FC<IncomeFormDialogProps> = (props) => {
     return (
         <FormDialogContainer title={props.title} open={props.open} setOpen={props.setOpen} processing={processing} onSubmit={submit}>
             <div className="flex flex-col gap-5">
-                <DateField label="Waktu Transaksi" name="time" time={data.time} setDate={(val) => setData('time', new Date(val))} />
                 <TextField
                     label="Nama"
                     name="name"
@@ -87,6 +88,7 @@ export const IncomeFormDialog: React.FC<IncomeFormDialogProps> = (props) => {
                     onChange={(e) => setData('amount', e.target.value)}
                     message={errors.amount}
                 />
+                <DateField label="Waktu Transaksi" name="time" time={data.time} setDate={(val) => setData('time', new Date(val))} />
                 <SelectField
                     label="Saldo"
                     name="balance"

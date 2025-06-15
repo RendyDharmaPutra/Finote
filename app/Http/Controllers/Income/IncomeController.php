@@ -101,7 +101,12 @@ class IncomeController extends Controller
         // Validasi data input
         $validated = $request->validate($this->validationRules, $this->validationMessages());
 
+        // Konversi time format
+        $validated['time'] = Carbon::parse($validated['time'])->setTimeZone('Asia/Jakarta');
+
         // Update data
+        $income = Income::findOrFail($id);
+        $income->update($validated);
     }
 
     public function destroy(Balance $balance) {
