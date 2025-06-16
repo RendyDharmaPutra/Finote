@@ -1,5 +1,5 @@
-type IncomePageProps = {
-    incomes: Income[];
+type OutcomePageProps = {
+    outcomes: Outcome[];
     balances: Balance[];
     categories: Category[];
 };

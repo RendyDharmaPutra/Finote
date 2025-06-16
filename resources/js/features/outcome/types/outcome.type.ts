@@ -1,4 +1,4 @@
-type Income = {
+type Outcome = {
     id?: number;
     name: string;
     amount: number;
@@ -7,7 +7,7 @@ type Income = {
     balance_id: number;
     balance: Balance;
     category_id: number;
-    income_category: Category;
+    outcome_category: Category;
     created_at: Date;
     updated_at: Date;
 };

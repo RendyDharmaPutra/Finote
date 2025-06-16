@@ -12,7 +12,7 @@ export const IncomeWrapper: React.FC<IncomeWrapperProps> = (props) => {
 
     return (
         <section className="flex flex-col gap-4">
-            <WrapperHeader title="Daftar Pemasukan" setShowAddDialog={setShowAddDialog} />
+            <WrapperHeader title="Daftar Pemasukan" addCallback={() => setShowAddDialog(true)} />
             <IncomeWrapperContent />
         </section>
     );

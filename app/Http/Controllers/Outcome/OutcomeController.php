@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-// use App\Models\Outcome;
+use App\Models\Outcome;
 use App\Models\OutcomeCategory;
 use App\Models\Balance;
 
@@ -57,9 +57,11 @@ class OutcomeController extends Controller
      */
     public function index() {
         // Ambil data Pengeluaran
-        // $incomes = Outcome::where('user_id', Auth::id())->latest()->get();
+        $outcomes = Outcome::where('user_id', Auth::id())->latest()->get();
 
-        return Inertia::render('outcome/outcomes');
+        return Inertia::render('outcome/outcomes', [
+            "outcomes" => $outcomes
+        ]);
     }
 
 

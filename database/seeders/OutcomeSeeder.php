@@ -16,7 +16,7 @@ class OutcomeSeeder extends Seeder
             [
                 'name' => 'Bayar Listrik',
                 'amount' => 200000,
-                'user_id' => '1',
+                'user_id' => '11',
                 'balance_id' => '1',
                 'category_id' => '3',
                 'time' => now()
@@ -24,7 +24,7 @@ class OutcomeSeeder extends Seeder
             [
                 'name' => 'Beli Pulsa',
                 'amount' => 50000,
-                'user_id' => '1',
+                'user_id' => '11',
                 'balance_id' => '1',
                 'category_id' => '1',
                 'time' => now()
@@ -32,7 +32,7 @@ class OutcomeSeeder extends Seeder
             [
                 'name' => 'Cicilan Motor',
                 'amount' => 1000000,
-                'user_id' => '1',
+                'user_id' => '11',
                 'balance_id' => '1',
                 'category_id' => '12',
                 'time' => now()
