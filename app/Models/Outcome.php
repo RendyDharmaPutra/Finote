@@ -35,4 +35,9 @@ class Outcome extends Model
     {
         return $this->belongsTo(OutcomeCategory::class, 'category_id');
     }
+
+    public function detailOutcomes() {
+        return $this->hasMany(DetailOutcome::class);
+    }
+
 }

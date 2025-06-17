@@ -21,7 +21,7 @@ export const OutcomesWrapper: React.FC<OutcomesWrapperProps> = (props) => {
 };
 
 const OutcomeWrapperContent = () => {
-    const { outcomes } = usePage<OutcomePageProps>().props;
+    const { outcomes } = usePage<OutcomesPageProps>().props;
 
     if (outcomes.length < 1) {
         return (

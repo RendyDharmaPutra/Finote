@@ -56,11 +56,13 @@ class OutcomeController extends Controller
      * Menampilkan Halaman Daftar Saldo
      */
     public function index() {
-        // Ambil data Pengeluaran
-        $outcomes = Outcome::where('user_id', Auth::id())->latest()->get();
+        $outcomes = Outcome::where('user_id', Auth::id())
+            ->withCount('detailOutcomes') // Ini akan menambahkan kolom detail_outcomes_count
+            ->latest()
+            ->get();
 
         return Inertia::render('outcome/outcomes', [
-            "outcomes" => $outcomes
+            'outcomes' => $outcomes
         ]);
     }
 
