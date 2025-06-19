@@ -10,7 +10,7 @@ export const OutcomesWrapper: React.FC<OutcomesWrapperProps> = (props) => {
     return (
         <section className="flex flex-col gap-4">
             <WrapperHeader
-                title="Daftar Pengeluaran"
+                title="Pengeluaran"
                 addCallback={() => {
                     // router.visit('income');
                 }}

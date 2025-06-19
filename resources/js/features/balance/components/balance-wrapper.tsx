@@ -10,7 +10,7 @@ export const BalanceWrapper = () => {
 
     return (
         <section className="flex flex-col gap-4">
-            <WrapperHeader title="Daftar Saldo" addCallback={() => setShowAddDialog(true)} />
+            <WrapperHeader title="Saldo" addCallback={() => setShowAddDialog(true)} />
             <BalanceWrapperContent />
         </section>
     );
