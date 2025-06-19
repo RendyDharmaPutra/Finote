@@ -17,14 +17,17 @@ class DetailOutcomeSeeder extends Seeder
         $data = [
             [
                 'name' => 'Listrik PLN',
+                'price' => 200000,
                 'outcome_id' => 1,
             ],
             [
                 'name' => 'Pulsa Telkomsel',
+                'price' => 200000,
                 'outcome_id' => 2,
             ],
             [
                 'name' => 'Cicilan Motor Yamaha',
+                'price' => 200000,
                 'outcome_id' => 3,
             ],
         ];

@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { formatToIDR } from '@/lib/formatters';
+import { router } from '@inertiajs/react';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { Package } from 'lucide-react';
@@ -11,7 +12,12 @@ type OutcomeCardProps = {
 
 export const OutcomeCard: React.FC<OutcomeCardProps> = ({ data }) => {
     return (
-        <Card className="group dayta-card">
+        <Card
+            className="group data-card cursor-pointer"
+            onClick={() => {
+                router.visit(`/outcome/${data.id}`);
+            }}
+        >
             <OutcomeCardHeader data={data} />
             <OutcomeCardContent data={data} />
         </Card>
@@ -34,7 +40,7 @@ const OutcomeCardContent: React.FC<OutcomeCardProps> = ({ data }) => {
         <CardContent>
             <div className="space-y-3">
                 <div className="flex flex-row justify-between">
-                    <p className="text-accent text-2xl font-bold">{formatToIDR(data.amount)}</p>
+                    <p className="text-primary text-2xl font-bold">{formatToIDR(data.amount)}</p>
                     <div className="flex items-center gap-1">
                         <Package className="h-3 w-3" />
                         <span className="font-medium">{data.detail_outcomes_count} barang</span>

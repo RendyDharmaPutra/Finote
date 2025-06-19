@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('detail_outcomes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('price');
             $table->string('outcome_id');
             $table->timestamps();
         });

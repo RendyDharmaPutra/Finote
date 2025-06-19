@@ -66,6 +66,17 @@ class OutcomeController extends Controller
         ]);
     }
 
+    public function show($id) {
+        $outcome = Outcome::findOrFail($id);
+
+         // Lazy Eager Load relasi 'details'
+        $outcome->load('detailOutcomes');
+
+        return Inertia::render('outcome/outcome-detail', [
+            'outcome' => $outcome
+        ]);
+    }
+
 
     public function store(Request $request) {
         // Validasi data input

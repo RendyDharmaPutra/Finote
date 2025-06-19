@@ -58,7 +58,7 @@ const IncomeCardContent: React.FC<IncomeCardProps> = ({ data }) => {
         <CardContent>
             <div className="space-y-3">
                 <div>
-                    <p className="text-accent text-2xl font-bold">{formatToIDR(data.amount)}</p>
+                    <p className="text-primary text-2xl font-bold">{formatToIDR(data.amount)}</p>
                 </div>
 
                 <div className="flex items-center justify-between text-sm">

@@ -11,6 +11,7 @@ class DetailOutcome extends Model
     protected $table = 'detail_outcomes';
     protected $fillable = [
         'name',
+        'price',
         'outcome_id'
     ];
     public function detailoutcome()
