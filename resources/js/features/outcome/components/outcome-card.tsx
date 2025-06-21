@@ -7,7 +7,7 @@ import { id } from 'date-fns/locale';
 import { Package } from 'lucide-react';
 
 type OutcomeCardProps = {
-    data: Outcome;
+    data: OutcomeList;
 };
 
 export const OutcomeCard: React.FC<OutcomeCardProps> = ({ data }) => {

@@ -8,9 +8,11 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Outcome;
+use App\Models\DetailOutcome;
 use App\Models\OutcomeCategory;
 use App\Models\Balance;
 
@@ -23,7 +25,13 @@ class OutcomeController extends Controller
         'time' => ['required', 'date'],
         'balance_id' => ['required', 'numeric'],
         'category_id' => ['required', 'numeric'],
+
+        // Tambahan untuk validasi rincian
+        'details' => ['nullable', 'array'],
+        'details.*.name' => ['required_with:details', 'string', 'min:1'],
+        'details.*.price' => ['required_with:details', 'numeric', 'min:0'],
     ];
+
 
 
     // ? Pesan dari Validasi -> karena pesan default dari Laravel menggunakan bahasa Inggris
@@ -48,6 +56,13 @@ class OutcomeController extends Controller
             'category_id.required' => 'Kategori wajib dipilih.',
             'category_id.numeric' => 'Kategori tidak valid.',
             'category_id.exists' => 'Kategori yang dipilih tidak ditemukan.',
+
+            'details.array' => 'Rincian pengeluaran tidak valid.',
+            'details.*.name.required_with' => 'Nama barang pada rincian wajib diisi.',
+            'details.*.name.string' => 'Nama barang pada rincian harus berupa teks.',
+            'details.*.price.required_with' => 'Harga barang pada rincian wajib diisi.',
+            'details.*.price.numeric' => 'Harga barang harus berupa angka.',
+            'details.*.price.min' => 'Harga barang tidak boleh negatif.',
         ];
     }
 
@@ -77,27 +92,58 @@ class OutcomeController extends Controller
         ]);
     }
 
+    public function create() {
+
+
+        return Inertia::render('outcome/add-outcome', [
+            'balances' => Balance::where('user_id', Auth::id())->get(),
+            'categories' => OutcomeCategory::all(),
+        ]);
+    }
+
 
     public function store(Request $request) {
         // Validasi data input
-        // $validated = $request->validate($this->validationRules, $this->validationMessages());
+        $validated = $request->validate($this->validationRules, $this->validationMessages());
 
-        // Tambahkan user_id ke data validasi
-        // $validated['user_id'] = Auth::id();
+        // Tambahkan user_id
+        $validated['user_id'] = Auth::id();
 
-        // Konversi time format
-        // $validated['time'] = Carbon::parse($validated['time'])->setTimeZone('Asia/Jakarta');
+        // Konversi waktu ke zona Jakarta
+        $validated['time'] = Carbon::parse($validated['time'])->setTimezone('Asia/Jakarta');
 
-        // Simpan Pengeluaran baru
-        // $income = Income::create($validated);
+        // Pisahkan data details sebelum insert Outcome
+        $details = $validated['details'] ?? [];
+        unset($validated['details']); // agar tidak error saat create outcome
 
-        // Tambahkan jumlah Pengeluaran ke balance terkait
-        // $balance = Balance::findOrFail($validated['balance_id']);
-        // $balance->amount += $validated['amount'];
-        // $balance->save();
+        DB::beginTransaction();
 
-        // return redirect()->route('income.index')->with('success', 'Pemasukan berhasil ditambahkan.');
+        try {
+            // Simpan Outcome utama
+            $outcome = Outcome::create($validated);
+
+            // Simpan semua detail jika ada
+            if (!empty($details)) {
+                foreach ($details as &$detail) {
+                    $detail['outcome_id'] = $outcome->id; // assign foreign key
+                }
+                DetailOutcome::insert($details); // bulk insert
+            }
+
+            // Kurangi saldo
+            $balance = Balance::findOrFail($validated['balance_id']);
+            $balance->amount -= $validated['amount']; // karena ini pengeluaran
+            $balance->save();
+
+            DB::commit();
+
+            return redirect()->route('outcome.index')->with('success', 'Pengeluaran berhasil ditambahkan.');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
+        }
     }
+
 
 
     public function update(Request $request, $id) {

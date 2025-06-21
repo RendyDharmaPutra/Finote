@@ -1,6 +1,6 @@
 import { EmptyBoundary } from '@/components/common/boundary/empty-boundary';
 import { WrapperHeader } from '@/components/container/wrapper-header';
-import { usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { Receipt } from 'lucide-react';
 import { OutcomeCard } from './outcome-card';
 
@@ -12,7 +12,7 @@ export const OutcomesWrapper: React.FC<OutcomesWrapperProps> = (props) => {
             <WrapperHeader
                 title="Pengeluaran"
                 addCallback={() => {
-                    // router.visit('income');
+                    router.visit('outcome/create');
                 }}
             />
             <OutcomeWrapperContent />
