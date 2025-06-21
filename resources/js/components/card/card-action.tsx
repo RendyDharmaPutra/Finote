@@ -9,7 +9,12 @@ export const CardAction: React.FC<CardActionProps> = ({ label, ...props }) => {
         label === 'Ubah' ? 'text-accent hover:text-accent-foreground' : 'hover:bg-destructive text-destructive hover:text-destructive-foreground';
 
     return (
-        <Button {...props} size="sm" variant="outline" className={`transition-all duration-250 md:opacity-0 md:group-hover:opacity-100 ${color}`}>
+        <Button
+            {...props}
+            size="sm"
+            variant="outline"
+            className={`transition-all duration-250 md:opacity-0 md:group-hover:opacity-100 ${color} cursor-pointer`}
+        >
             {props.children}
             <span className="sr-only">{label}</span>
         </Button>

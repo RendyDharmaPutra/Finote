@@ -1,10 +1,11 @@
+import { CardAction } from '@/components/card/card-action';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { formatToIDR } from '@/lib/formatters';
 import { router } from '@inertiajs/react';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
-import { Package } from 'lucide-react';
+import { Package, Pencil, Trash2 } from 'lucide-react';
 
 type OutcomeCardProps = {
     data: OutcomeList;
@@ -29,6 +30,19 @@ const OutcomeCardHeader: React.FC<OutcomeCardProps> = ({ data }) => {
         <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
                 <CardTitle className="text-lg">{data.name}</CardTitle>
+                <div className="flex flex-row gap-2.5">
+                    <CardAction
+                        label="Ubah"
+                        onClick={() => {
+                            router.visit(`/outcome/${data.id}/edit`);
+                        }}
+                    >
+                        <Pencil className="h-4 w-4" />
+                    </CardAction>
+                    <CardAction label="Hapus" onClick={() => {}}>
+                        <Trash2 className="h-4 w-4" />
+                    </CardAction>
+                </div>
             </div>
             <Badge variant="outline">{data.outcome_category.name}</Badge>
         </CardHeader>
