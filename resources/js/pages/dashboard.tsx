@@ -1,7 +1,7 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import { useState } from 'react';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
+import { BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,25 +11,63 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dashboard() {
-    return (
-        <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                </div>
-                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
+  // Data statis untuk statistik
+  const [totalBalance, setTotalBalance] = useState(25000);  // Total Saldo
+  const [latestIncome, setLatestIncome] = useState(5000);    // Pemasukan Terakhir
+  const [latestOutcome, setLatestOutcome] = useState(2000);   // Pengeluaran Terakhir
+
+  return (
+    <AppLayout breadcrumbs={breadcrumbs}>
+      <Head title="Dashboard" />
+      <div className="flex flex-col gap-6 p-8">
+        {/* Grid untuk Pemasukan Terakhir dan Pengeluaran Terakhir */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Pemasukan Terakhir */}
+          <div
+            className="text-white text-xl font-semibold rounded-xl p-8 flex justify-center items-center shadow-lg"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1619149769183-01fc5bccc153?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dWFuZ3xlbnwwfHwwfHx8MA%3D%3D')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            <div>
+              <h3 className="text-lg font-bold">Pemasukan Terakhir</h3>
+              <p className="text-3xl">{latestIncome}</p>
             </div>
-        </AppLayout>
-    );
+          </div>
+
+          {/* Pengeluaran Terakhir */}
+          <div
+            className="text-white text-xl font-semibold rounded-xl p-8 flex justify-center items-center shadow-lg"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1554768803-2ae381da5645?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dWFuZyUyMHRlcmJha2FyfGVufDB8fDB8fHww')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            <div>
+              <h3 className="text-lg font-bold">Pengeluaran Terakhir</h3>
+              <p className="text-3xl">{latestOutcome}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Total Saldo yang lebih besar dan memenuhi hampir seluruh lebar */}
+        <div
+          className="text-white text-6xl font-semibold rounded-xl p-24 shadow-xl flex justify-center items-center mt-4"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1604156425963-9be03f86a428?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dWFuZ3xlbnwwfHwwfHx8MA%3D%3D')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div>
+            <h3 className="text-4xl font-bold">Total Saldo</h3>
+            <p className="text-7xl">{totalBalance}</p>
+          </div>
+        </div>
+      </div>
+    </AppLayout>
+  );
 }
