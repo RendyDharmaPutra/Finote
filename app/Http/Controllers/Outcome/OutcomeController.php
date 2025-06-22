@@ -223,15 +223,30 @@ class OutcomeController extends Controller
     }
 
 
+    public function destroy(Outcome $outcome) {
+        DB::beginTransaction();
 
+        try {
+            // Tambahkan kembali amount ke saldo terkait
+            $balance = Balance::findOrFail($outcome->balance_id);
+            $balance->amount += $outcome->amount;
+            $balance->save();
 
-    public function destroy(Income $income) {
-        // Tambahkan amount dari balance terkait
+            // Hapus semua detail pengeluaran terkait
+            DetailOutcome::where('outcome_id', $outcome->id)->delete();
 
-        // Hapus Data Pengeluaran
-        // $income->delete();
+            // Hapus data pengeluaran utama
+            $outcome->delete();
 
-        // return redirect()->back()->with('success', 'Pengeluaran berhasil dihapus.');
+            DB::commit();
+
+            return redirect()->route('outcome.index')->with('success', 'Pengeluaran berhasil dihapus.');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return redirect()->back()->with('error', 'Gagal menghapus pengeluaran: ' . $e->getMessage());
+        }
     }
+
 
 }

@@ -19,7 +19,7 @@ export const DeleteIncomeDialog = (props: DeleteIncomeDialogProps) => {
 
     return (
         <DeleteDialog
-            title="Hapus Saldo"
+            title="Hapus Pemasukan"
             description={`Yakin untuk menghapus Pemasukan ${selectedData?.name} pada ${selectedData?.time}? Aksi ini tidak dapat dibatalkan`}
             open={showDeleteDialog}
             setOpen={setShowDeleteDialog}

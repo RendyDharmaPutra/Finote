@@ -7,7 +7,9 @@ import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { Banknote, Calendar, Pencil, ReceiptText, Tag, Trash2, Wallet } from 'lucide-react';
 
-type OutcomeDetailMainProps = {};
+type OutcomeDetailMainProps = {
+    setShowDeleteDialog: (value: boolean) => void;
+};
 
 export const OutcomeDetailMain: React.FC<OutcomeDetailMainProps> = (props) => {
     const { outcome } = usePage<OutcomeDetailPageProps>().props;
@@ -29,7 +31,7 @@ export const OutcomeDetailMain: React.FC<OutcomeDetailMainProps> = (props) => {
                         >
                             <Pencil className="h-4 w-4" />
                         </CardAction>
-                        <CardAction label="Hapus" onClick={() => {}}>
+                        <CardAction label="Hapus" onClick={() => props.setShowDeleteDialog(true)}>
                             <Trash2 className="h-4 w-4" />
                         </CardAction>
                     </div>
