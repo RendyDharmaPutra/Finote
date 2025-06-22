@@ -8,13 +8,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
-use App\Models\Outcome;
-use App\Models\DetailOutcome;
-use App\Models\OutcomeCategory;
-use App\Models\Balance;
 
 
 class VisualizeController extends Controller
