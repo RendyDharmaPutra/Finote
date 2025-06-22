@@ -7,7 +7,6 @@ type DeleteOutcomeDialogProps = {
 };
 
 export const DeleteOutcomeDialog = (props: DeleteOutcomeDialogProps) => {
-    // const { showDeleteDialog, setShowDeleteDialog, selectedData } = useOutcomeDialog();
     const { outcome } = usePage<OutcomeDetailPageProps>().props;
 
     const { delete: destroy, processing } = useForm();
