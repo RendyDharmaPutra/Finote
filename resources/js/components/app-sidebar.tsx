@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Coins, LayoutGrid, ReceiptText, Wallet } from 'lucide-react';
+import { ChartColumnDecreasing, ChartColumnIncreasing, Coins, LayoutGrid, ReceiptText, Wallet } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -26,6 +26,16 @@ const mainNavItems: NavItem[] = [
         title: 'Pengeluaran',
         href: '/outcome',
         icon: ReceiptText,
+    },
+    {
+        title: 'Visualisasi Pemasukan',
+        href: '/visualize-income',
+        icon: ChartColumnIncreasing,
+    },
+    {
+        title: 'Visualisasi Pengeluaran',
+        href: '/visualize-outcome',
+        icon: ChartColumnDecreasing,
     },
 ];
 
