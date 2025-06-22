@@ -1,16 +1,16 @@
 import { useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useEffect } from 'react';
 import { RouteName } from 'vendor/tightenco/ziggy/src/js';
 import { OutcomeDetailsSection } from './outcome-details-section';
 import { OutcomeInfoSection } from './outcome-info-section';
 
 type OutcomeFormProps = {
-    // initialValues: OutcomeForm;
+    initialValues?: Outcome;
     action: RouteName;
     method: 'post' | 'put';
 };
 
-export const OutcomeForm: React.FC<OutcomeFormProps> = ({ action, method = 'post' }) => {
+export const OutcomeForm: React.FC<OutcomeFormProps> = ({ initialValues, action, method = 'post' }) => {
     const { data, setData, post, put, processing, errors, reset } = useForm<Required<OutcomeForm>>({
         name: '',
         amount: 0,
@@ -19,6 +19,22 @@ export const OutcomeForm: React.FC<OutcomeFormProps> = ({ action, method = 'post
         category_id: '',
         details: [],
     });
+
+    // Set Initial Values jika ada dari Props
+    useEffect(() => {
+        if (initialValues) {
+            setData({
+                name: initialValues.name,
+                amount: initialValues.amount,
+                time: new Date(initialValues.time),
+                balance_id: initialValues.balance.id!,
+                category_id: initialValues.outcome_category.id!,
+                details: initialValues.detail_outcomes ?? [],
+            });
+        }
+    }, [initialValues]);
+
+    // useEffect(() => console.log(data), [data]); // ! Debug
 
     const addDetail = (newDetail: OutcomeDetailForm) => {
         const updatedDetails = [...(data.details || []), newDetail];
@@ -45,11 +61,11 @@ export const OutcomeForm: React.FC<OutcomeFormProps> = ({ action, method = 'post
         e.preventDefault();
 
         const submitFn = method === 'put' ? put : post;
-        // const routeParams = method === 'put' ? { outcome: initialValues?.id } : undefined;
+        const routeParams = method === 'put' ? { outcome: initialValues?.id } : undefined;
 
         // setData('amount', Number(data.amount)); // Convert ke Number sebelum diproses di Backend
 
-        submitFn(route(action), {
+        submitFn(route(action, routeParams), {
             onSuccess: () => {
                 reset();
             },

@@ -144,47 +144,84 @@ class OutcomeController extends Controller
         }
     }
 
+    public function edit($id) {
+        $outcome = Outcome::findOrFail($id);
+
+         // Lazy Eager Load relasi 'details'
+        $outcome->load('detailOutcomes');
+
+         return Inertia::render('outcome/edit-outcome', [
+            'outcome' => $outcome,
+            'balances' => Balance::where('user_id', Auth::id())->get(),
+            'categories' => OutcomeCategory::all(),
+        ]);
+    }
 
 
     public function update(Request $request, $id) {
         // Validasi data input
-        // $validated = $request->validate($this->validationRules, $this->validationMessages());
+        $validated = $request->validate($this->validationRules, $this->validationMessages());
 
-        // Konversi waktu
-        // $validated['time'] = Carbon::parse($validated['time'])->setTimeZone('Asia/Jakarta');
+        // Konversi waktu ke zona Jakarta
+        $validated['time'] = Carbon::parse($validated['time'])->setTimezone('Asia/Jakarta');
 
-        // Periksa Eksistensi Pengeluaran yang dipilih
-        // $income = Income::findOrFail($id);
+        // Pisahkan data details
+        $details = $validated['details'] ?? [];
+        unset($validated['details']);
 
-        // $oldAmount = $income->amount;
-        // $oldBalanceId = $income->balance_id;
+        DB::beginTransaction();
 
-        // $newAmount = $validated['amount'];
-        // $newBalanceId = $validated['balance_id'];
+        try {
+            // Temukan Outcome yang akan diperbarui
+            $outcome = Outcome::findOrFail($id);
+            $oldAmount = $outcome->amount;
+            $oldBalanceId = $outcome->balance_id;
 
-        // 🔁 Update balance sesuai kondisi
-        // if ($oldBalanceId != $newBalanceId) {
-        //     // Kurangi dari balance lama
-        //     $oldBalance = Balance::findOrFail($oldBalanceId);
-        //     $oldBalance->amount -= $oldAmount;
-        //     $oldBalance->save();
+            $newAmount = $validated['amount'];
+            $newBalanceId = $validated['balance_id'];
 
-        //     // Tambahkan ke balance baru
-        //     $newBalance = Balance::findOrFail($newBalanceId);
-        //     $newBalance->amount += $newAmount;
-        //     $newBalance->save();
-        // } else {
-        //     // Balance sama, update dengan selisih
-        //     $balance = Balance::findOrFail($oldBalanceId);
-        //     $difference = $newAmount - $oldAmount;
-        //     $balance->amount += $difference;
-        //     $balance->save();
-        // }
+            // 🔁 Update balance tergantung apakah terjadi perpindahan saldo
+            if ($oldBalanceId != $newBalanceId) {
+                // Kembalikan jumlah dari balance lama
+                $oldBalance = Balance::findOrFail($oldBalanceId);
+                $oldBalance->amount += $oldAmount;
+                $oldBalance->save();
 
-        // Update Pengeluaran
+                // Kurangi dari balance baru
+                $newBalance = Balance::findOrFail($newBalanceId);
+                $newBalance->amount -= $newAmount;
+                $newBalance->save();
+            } else {
+                // Saldo tetap, cukup update dengan selisih amount
+                $balance = Balance::findOrFail($oldBalanceId);
+                $difference = $newAmount - $oldAmount;
+                $balance->amount -= $difference;
+                $balance->save();
+            }
 
-        // return redirect()->route('income.index')->with('success', 'Pengeluaran berhasil diperbarui.');
+            // Update data utama outcome
+            $outcome->update($validated);
+
+            // Hapus rincian lama
+            DetailOutcome::where('outcome_id', $outcome->id)->delete();
+
+            // Tambahkan rincian baru (jika ada)
+            if (!empty($details)) {
+                foreach ($details as &$detail) {
+                    $detail['outcome_id'] = $outcome->id;
+                }
+                DetailOutcome::insert($details);
+            }
+
+            DB::commit();
+
+            return redirect()->route('outcome.index')->with('success', 'Pengeluaran berhasil diperbarui.');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return back()->with('error', 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage());
+        }
     }
+
 
 
 

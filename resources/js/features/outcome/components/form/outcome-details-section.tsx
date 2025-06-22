@@ -44,6 +44,7 @@ export const OutcomeDetailsSection: React.FC<OutcomeDetailsSectionProps> = (prop
                             <div className="space-y-3">
                                 {props.data.details.map((detail: OutcomeDetailForm, index) => (
                                     <OutcomeDetailCard
+                                        key={index}
                                         index={index}
                                         detail={detail}
                                         processing={props.processing}
